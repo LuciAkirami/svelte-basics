@@ -8,7 +8,7 @@
 <div class="generations">
     {#each generations as generation}
     <div class="generation">
-        <p>{generation.name}</p>
+        {generation.name}
     </div>
 {/each}
 </div>
@@ -40,9 +40,9 @@
     .generation {
         text-align: center;
         border: 1px solid black;
-        margin: 5px;
+        margin: 10px;
         color: #111;
-        padding: 1px 10px;
+        padding: 5px 10px;
         background-color: #f9f9f9;
     }
 
@@ -54,6 +54,7 @@
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
+        justify-content: center;
     }
 
     .monster {
@@ -62,8 +63,12 @@
         width: 100px;
         margin: 20px 10px;
         background-color: #eee;
+        border-radius: 10px;
         align-items: center;
         position: relative;
+        /* background: rgba(255, 255, 255, 0.23);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
     }
 
     .monster:hover {
@@ -77,6 +82,8 @@
 
     .monster-id {
         position: absolute;
+        font-size: 0.8em;
+        color: #999;
         top: 0;
         left: 0;
         padding: 5px;
