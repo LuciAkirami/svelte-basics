@@ -1,0 +1,39 @@
+interface Generations {
+    generation: number,
+    name: string
+}
+export const generations: Generations[] = [
+    {
+      "generation": 1,
+      "name": "Kanto"
+    },
+    {
+      "generation": 2,
+      "name": "Johto"
+    },
+    {
+      "generation": 3,
+      "name": "Hoenn"
+    },
+    {
+      "generation": 4,
+      "name": "Sinnoh"
+    },
+    {
+      "generation": 5,
+      "name": "Unova"
+    },
+    {
+      "generation": 6,
+      "name": "Kalos"
+    },
+    {
+      "generation": 7,
+      "name": "Alola"
+    },
+    {
+      "generation": 8,
+      "name": "Galar"
+    }
+  ]
+  
