@@ -3,11 +3,12 @@
     import type { Monster } from './+page.js';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
+    import Monsters from './Monsters.svelte';
 
     export let data;
-    $: monsterId = $page.url.searchParams.get('monsterId');
+    $: monsterId = $page.url.searchParams.get('monsterId') || '';
     $: monster = data.monsters.find((monster) => monster.id == monsterId);
-    $: monsterId2 = $page.url.searchParams.get('monsterId2');
+    $: monsterId2 = $page.url.searchParams.get('monsterId2') || '';
     $: monster2 = data.monsters.find((monster) => monster.id == monsterId2);
 
     // function getMonster(monster: Monster) {
@@ -15,7 +16,7 @@
     //     goto(`?monsterid=${monsterId}`)
     // }
 
-    function generateSearchParams(key: string, value: string){
+    function updateSearchParams(key: string, value: string){
         const searchParams = new URLSearchParams($page.url.searchParams)
         searchParams.set(key,value)
         goto(`?${searchParams.toString()}`)
@@ -24,11 +25,19 @@
 </script>
 <h1>Welcome to Pokemon API</h1>
 
-<h1>{monsterId}</h1>
-<h1>{monster?.name}</h1>
-<h1>{monsterId2}</h1>
-<h1>{monster2?.name}</h1>
-<h1>{$page.url.searchParams}</h1>
+{#if monster}
+    <Monsters 
+    monster = {monster}
+    updateSearchParams={updateSearchParams}
+    />
+{/if}
+
+{#if monster2}
+    <Monsters 
+    monster = {monster2}
+    updateSearchParams={updateSearchParams}
+    />
+{/if}
 
 <div class="generations">
     {#each generations as generation}
@@ -41,25 +50,11 @@
 
 <div class="monsters">
     {#each data.monsters as monster}
-    <div class="monster">
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div on:click={() => {generateSearchParams('monsterId',monster.id)}}>
-            <div class="monster-content">
-                <img src={monster.image} alt="monster.name" class="imageu">
-                {monster.name}
-            </div>
-            <div class="monster-id">
-                {monster.id}
-            </div>
-        </div>
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div on:click={() => {generateSearchParams('monsterId2',monster.id)}}>
-            Add Monster
-        </div>
-        
-    </div>
+        <Monsters 
+            monster={monster}
+            updateSearchParams={updateSearchParams}
+            isInteractive = {true}
+        />
     {/each}
 </div>
 
@@ -92,39 +87,4 @@
         justify-content: center;
     }
 
-    .monster {
-        display: flex;
-        flex-direction: column;
-        width: 100px;
-        margin: 20px 10px;
-        background-color: #eee;
-        border-radius: 10px;
-        align-items: center;
-        position: relative;
-        /* background: rgba(255, 255, 255, 0.23);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
-    }
-
-    .monster:hover {
-        background-color: #dddd;
-    }
-
-    .monster-content {
-        text-align: center;
-        padding: 10px;
-    }
-
-    .monster-id {
-        position: absolute;
-        font-size: 0.8em;
-        color: #999;
-        top: 0;
-        left: 0;
-        padding: 5px;
-    }
-
-    .imageu{
-        filter: drop-shadow(10px 10px 10px #999);
-    }
 </style>
