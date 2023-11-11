@@ -1,10 +1,35 @@
 <script lang="ts">
     import { generations } from './generations.js';
+    import type { Monster } from './+page.js';
+    import { page } from '$app/stores';
+    import { goto } from '$app/navigation';
 
     export let data;
+    $: monsterId = $page.url.searchParams.get('monsterId');
+    $: monster = data.monsters.find((monster) => monster.id == monsterId);
+    $: monsterId2 = $page.url.searchParams.get('monsterId2');
+    $: monster2 = data.monsters.find((monster) => monster.id == monsterId2);
+
+    // function getMonster(monster: Monster) {
+    //     monsterId = monster.id;
+    //     goto(`?monsterid=${monsterId}`)
+    // }
+
+    function generateSearchParams(key: string, value: string){
+        const searchParams = new URLSearchParams($page.url.searchParams)
+        searchParams.set(key,value)
+        goto(`?${searchParams.toString()}`)
+    }
 
 </script>
 <h1>Welcome to Pokemon API</h1>
+
+<h1>{monsterId}</h1>
+<h1>{monster?.name}</h1>
+<h1>{monsterId2}</h1>
+<h1>{monster2?.name}</h1>
+<h1>{$page.url.searchParams}</h1>
+
 <div class="generations">
     {#each generations as generation}
     <div class="generation">
@@ -17,13 +42,23 @@
 <div class="monsters">
     {#each data.monsters as monster}
     <div class="monster">
-        <div class="monster-content">
-            <img src={monster.image} alt="monster.name" class="imageu">
-            {monster.name}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div on:click={() => {generateSearchParams('monsterId',monster.id)}}>
+            <div class="monster-content">
+                <img src={monster.image} alt="monster.name" class="imageu">
+                {monster.name}
+            </div>
+            <div class="monster-id">
+                {monster.id}
+            </div>
         </div>
-        <div class="monster-id">
-            {monster.id}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div on:click={() => {generateSearchParams('monsterId2',monster.id)}}>
+            Add Monster
         </div>
+        
     </div>
     {/each}
 </div>

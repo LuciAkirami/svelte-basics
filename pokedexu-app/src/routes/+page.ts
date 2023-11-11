@@ -1,14 +1,14 @@
+interface IndexMonster {
+    name: string,
+    url: string,
+}
+
+export interface Monster extends IndexMonster {
+    id: string,
+    image: string
+}
+
 export const load = ( async ({fetch}) => {
-    interface IndexMonster {
-        name: string,
-        url: string,
-    }
-
-    interface Monster extends IndexMonster {
-        id: string,
-        image: string
-    }
-
     const data = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
     const json = await data.json()
     let monsters: Monster[] = json.results.map((monster: IndexMonster)=>{
