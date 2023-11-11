@@ -4,12 +4,14 @@
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import Monsters from './Monsters.svelte';
+    import { caughtMonsters } from '$lib/store.js';
 
     export let data;
-    $: monsterId = $page.url.searchParams.get('monsterId') || '';
-    $: monster = data.monsters.find((monster) => monster.id == monsterId);
-    $: monsterId2 = $page.url.searchParams.get('monsterId2') || '';
-    $: monster2 = data.monsters.find((monster) => monster.id == monsterId2);
+    // $: monsterId = $page.url.searchParams.get('monsterId') || '';
+    // $: monster = data.monsters.find((monster) => monster.id == monsterId);
+    // $: monsterId2 = $page.url.searchParams.get('monsterId2') || '';
+    // $: monster2 = data.monsters.find((monster) => monster.id == monsterId2);
+
     $: selectedGenerationId = $page.url.searchParams.get('generationId') || '';
 
     let formData = {
@@ -35,7 +37,7 @@
 </script>
 <h1 style="text-align: center;">Poke Catcher</h1>
 
-{#if monster}
+<!-- {#if monster}
     <Monsters 
     monster = {monster}
     updateSearchParams={updateSearchParams}
@@ -47,7 +49,7 @@
     monster = {monster2}
     updateSearchParams={updateSearchParams}
     />
-{/if}
+{/if} -->
 
 <div class="generations">
     <button class="generation" 
@@ -74,8 +76,6 @@
     {#each selectedMonsters as monster}
         <Monsters 
             monster={monster}
-            updateSearchParams={updateSearchParams}
-            isInteractive = {true}
         />
     {/each}
 </div>
