@@ -29,7 +29,7 @@
 </div>
 
 <style>
-        .monster {
+    .monster {
         display: flex;
         flex-direction: column;
         width: 100px;

@@ -11,10 +11,19 @@
     $: monsterId2 = $page.url.searchParams.get('monsterId2') || '';
     $: monster2 = data.monsters.find((monster) => monster.id == monsterId2);
 
-    // function getMonster(monster: Monster) {
-    //     monsterId = monster.id;
-    //     goto(`?monsterid=${monsterId}`)
-    // }
+    let formData = {
+        searchString: ""
+    }
+
+    let searchString = ''
+
+    function formSearchAction() {
+        searchString = formData.searchString
+    }
+
+    $: selectedMonsters = data.monsters.filter((monster)=>{
+        return monster.name.toLowerCase().includes(searchString.toLowerCase())
+    })
 
     function updateSearchParams(key: string, value: string){
         const searchParams = new URLSearchParams($page.url.searchParams)
@@ -23,7 +32,7 @@
     }
 
 </script>
-<h1>Welcome to Pokemon API</h1>
+<h1 style="text-align: center;">Poke Catcher</h1>
 
 {#if monster}
     <Monsters 
@@ -47,9 +56,14 @@
 {/each}
 </div>
 
+<form class="search-form" on:submit={formSearchAction}>
+    <input type="text" bind:value={formData.searchString} placeholder="Pokemon Name" />
+    <input type="submit" value="search"/>
+    <!-- <p>{formData.searchString}</p> -->
+</form>
 
 <div class="monsters">
-    {#each data.monsters as monster}
+    {#each selectedMonsters as monster}
         <Monsters 
             monster={monster}
             updateSearchParams={updateSearchParams}
@@ -85,6 +99,28 @@
         flex-wrap: wrap;
         flex-direction: row;
         justify-content: center;
+    }
+
+    .search-form{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 20px 0px;
+    }
+
+    .search-form input[type="text"] {
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: 1px solid black
+    }
+
+    .search-form input[type='submit'] {
+        padding: 5px 10px;
+        margin-left: 10px;
+        color: #eee;
+        background-color: #333;
+        border: 1px solid #333;
+        border-radius: 5px;
     }
 
 </style>
