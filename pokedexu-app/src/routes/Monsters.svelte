@@ -38,6 +38,7 @@
         border-radius: 10px;
         align-items: center;
         position: relative;
+        padding: 8px;
         /* background: rgba(255, 255, 255, 0.23);
         border-radius: 16px;
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
