@@ -1,6 +1,7 @@
 <script lang='ts'>
     import type { Monster } from "./+page";
     import { caughtMonsters } from "$lib/store";
+  import { goto } from "$app/navigation";
 
     export let monster: Monster;
     // export let updateSearchParams: (key: string, value: string) => void;
@@ -18,7 +19,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div on:click={addMonsters}>
-        <div class="monster-content">
+        <div class="monster-content" on:click={()=>goto("/monster-info")}>
             <img src={monster.image} alt="monster.name" class="imageu">
             {monster.name}
         </div>
